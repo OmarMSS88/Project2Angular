@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Offer } from './offer';
 
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
-
-  constructor() { }
-
-  getArticles(): Offer[] {
-    let offers: Offer[] = [];
-
+  private offers: Offer[] = [];
+  constructor() {
     let offer1: Offer = {
       id: 1,
       title: "Title article",
@@ -39,9 +38,15 @@ export class OfferService {
       publishDate: "30/11/2020"
     };
 
-    offers.push(offer1);
-    offers.push(offer2);
+    this.offers.push(offer1);
+    this.offers.push(offer2);
+   }
 
-    return offers;
+  getOffers(): Offer[] {
+    return this.offers;
+  }
+
+  getOfferById(id: number) : Offer | null {
+    return this.offers.find(a=>a.id === id) ?? null; //find = JavaScript method on arrays!
   }
 }
