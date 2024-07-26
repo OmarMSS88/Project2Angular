@@ -1,4 +1,4 @@
-export interface Offer {
+export interface Article {
     id: number;
     title: string;
     subtitle: string;

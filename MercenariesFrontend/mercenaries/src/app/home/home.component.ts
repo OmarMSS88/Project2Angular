@@ -3,6 +3,7 @@ import { Offer } from '../offer';
 import { OfferService } from '../offer.service';
 import { OfferComponent } from '../offer/offer.component';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  offers: Offer[] = [];
+  offers$: Observable<Offer[]> = new Observable<Offer[]>();
 
   constructor(private offerService: OfferService) { }
 
   ngOnInit(): void {
-    this.offers = this.offerService.getOffers();
+    this.offers$ = this.offerService.getOffers();
   }
 }

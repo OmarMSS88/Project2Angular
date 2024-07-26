@@ -13,17 +13,14 @@ import { OfferComponent } from '../offer/offer.component';
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
-  offer: Offer = { id: 0, title: "", subtitle: "", imageUrl: "", imageCaption: "", content: "", author: "", publishDate: "" };
+  offer: Offer = { id: 0, title: "", subtitle: "", imageUrl: "", imageCaption: "", content: "", author: "", publishDate: "", categoryId: 0 };
 
-  constructor(private offerservice: OfferService, private route: ActivatedRoute) { }
+  constructor(private offerService: OfferService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const offerId = this.route.snapshot.paramMap.get('id');
     if (offerId != null) {
-      let offerTemp = this.offerservice.getOfferById(+offerId) ?? null;
-      if (offerTemp != null) {
-        this.offer = offerTemp;
-      }
+      this.offerService.getOfferById(+offerId).subscribe(result => this.offer = result);
     }
   }
 }

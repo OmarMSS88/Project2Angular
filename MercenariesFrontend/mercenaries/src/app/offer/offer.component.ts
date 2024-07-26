@@ -12,7 +12,7 @@ import { ShortenContentPipe } from '../shorten-content.pipe';
   styleUrl: './offer.component.css'
 })
 export class OfferComponent implements OnInit {
-  @Input() offer: Offer = { id: 0, title: "", subtitle: "", imageUrl: "", imageCaption: "", content: "", author: "", publishDate: "" };
+  @Input() offer: Offer = { id: 0, title: "", subtitle: "", imageUrl: "", imageCaption: "", content: "", author: "", publishDate: "", categoryId: 0 };
 
   @Input() isDetail: boolean = false;
 
