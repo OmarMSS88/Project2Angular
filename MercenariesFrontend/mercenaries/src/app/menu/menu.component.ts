@@ -1,17 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { LoginButtonComponent } from '../login/login.component';
+import { AuthService } from '@auth0/auth0-angular';
+import { RoleService } from '../role.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LoginButtonComponent],
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  isAuthenticated = signal(false);
+  isAdmin = signal(false);
+
+  constructor(private router: Router, private authService: AuthService, public roleService: RoleService) {
+    this.authService.isAuthenticated$.subscribe((auth) => {
+      this.isAuthenticated.set(auth);
+    });
+
+    this.roleService.hasPermission('delete:offertype').subscribe(r => {
+      this.isAdmin.set(r);
+    })
+   }
+
+   
 
   ngOnInit(): void {
   }

@@ -2,6 +2,7 @@
 using MercenariesBackend.API.Dto;
 using MercenariesBackend.DAL;
 using MercenariesBackend.DAL.Entity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,6 +52,7 @@ namespace MercenariesBackend.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "OfferTypeWriteAccess")]
         public async Task<ActionResult<OfferTypeDto>> CreateOfferType([FromBody] CreateOfferTypeDto createOfferTypeDto)
         {
             if (createOfferTypeDto == null)
@@ -68,6 +70,7 @@ namespace MercenariesBackend.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy ="OfferTypeWriteAccess")]
         public async Task<IActionResult> UpdateOfferType(int id, [FromBody] UpdateOfferTypeDto updateOfferTypeDto)
         {
             if (id != updateOfferTypeDto.Id)
@@ -90,6 +93,7 @@ namespace MercenariesBackend.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "OfferTypeDeleteAccess")]
         public async Task<IActionResult> DeleteOfferType(int id)
         {
             var offerType = await _context.OfferTypes.FindAsync(id);

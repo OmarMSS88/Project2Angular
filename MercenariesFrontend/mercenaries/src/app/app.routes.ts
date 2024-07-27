@@ -5,12 +5,14 @@ import { ContactComponent } from './contact/contact.component';
 import { OfferDetailComponent } from './offer-detail/offer-detail.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { AuthGuard } from '@auth0/auth0-angular';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'offer', component: OfferComponent},
     {path: 'contact', component: ContactComponent},
     {path: 'offer/:id', component: OfferDetailComponent},
-    {path: 'admin/category', component: CategoryListComponent},
-    {path: 'admin/category/form', component: CategoryFormComponent}
+    {path: 'admin/category', component: CategoryListComponent, canActivate: [AuthGuard]},
+    {path: 'admin/category/form', component: CategoryFormComponent, canActivate: [AuthGuard]}
+    
 ];

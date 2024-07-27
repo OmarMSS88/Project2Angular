@@ -15,13 +15,12 @@ builder.Services.AddAuthentication().AddJwtBearer();
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("TripReadAccess", policy =>
-                          policy.RequireClaim("permissions", "read:trip"));
-    options.AddPolicy("TripWriteAccess", policy =>
-                          policy.RequireClaim("permissions", "create:trip", "update:trip"));
-    options.AddPolicy("TripDeleteAccess", policy =>
-                      policy.RequireClaim("permissions", "delete:trip"));
+    options.AddPolicy("OfferTypeDeleteAccess", policy =>
+                          policy.RequireClaim("permissions", "delete:offertype"));
+    options.AddPolicy("OfferTypeWriteAccess", policy =>
+                          policy.RequireClaim("permissions", "add:offertype", "update:offertype"));
 });
+
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerService();
@@ -32,7 +31,7 @@ app.UseCors(options =>
 {
     options.AllowAnyHeader();
     options.AllowAnyMethod();
-    options.AllowAnyOrigin();
+    options.WithOrigins("http://localhost:4200", "http://localhost:4200");
 });
 
 if (app.Environment.IsDevelopment())
