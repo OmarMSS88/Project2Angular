@@ -2,7 +2,7 @@
 using MercenariesBackend.API.Dto;
 using MercenariesBackend.DAL.Entity;
 
-namespace JiffyBackend.API.Mapper
+namespace MercenariesBackend.API.Mapper
 {
     public class AutoMapper : Profile
     {

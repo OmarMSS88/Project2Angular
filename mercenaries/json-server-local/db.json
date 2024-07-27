@@ -1,5 +1,5 @@
 {
-  "offers": [
+  "articles": [
     {
       "id": "1",
       "title": "Title article",
@@ -13,7 +13,7 @@
     },
     {
       "id": "2",
-      "title": "Title kanker 2",
+      "title": "Title article 2",
       "subtitle": "Subtitle article 2",
       "imageUrl": "https://images.pexels.com/photos/3422964/pexels-photo-3422964.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=100&w=134",
       "imageCaption": "caption image",
@@ -35,6 +35,10 @@
     {
       "id": "3",
       "name": "politics"
+    },
+    {
+      "id": 0,
+      "name": "Crone"
     },
     {
       "id": 0,
