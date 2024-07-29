@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Offer } from '../offer';
+import { Offer } from '../models/offer';
 import { OfferService } from '../offer.service';
 import { OfferComponent } from '../offer/offer.component';
 import { Observable } from 'rxjs';

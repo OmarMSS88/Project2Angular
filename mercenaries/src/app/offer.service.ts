@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Offer } from './offer';
+import { Offer } from './models/offer';
 
 import { HttpClient } from '@angular/common/http';
 import { Observable, timer, switchMap } from 'rxjs';

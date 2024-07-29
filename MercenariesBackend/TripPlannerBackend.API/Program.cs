@@ -46,8 +46,8 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var tripContext = scope.ServiceProvider.GetRequiredService<MercenariesDbContext>();
-    DBInitializer.Initialize(tripContext);
+    var mercContext = scope.ServiceProvider.GetRequiredService<MercenariesDbContext>();
+    DBInitializer.Initialize(mercContext);
 }
 
 app.Run();

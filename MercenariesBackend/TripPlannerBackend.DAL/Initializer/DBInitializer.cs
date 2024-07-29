@@ -9,6 +9,12 @@ namespace MercenariesBackend.DAL.Initializer
         {
             context.Database.EnsureCreated();
 
+            // Check if there are any existing records in the Offer table
+            if (context.Offers.Any())
+            {
+                return; // DB has been seeded
+            }
+
             // Seed the OfferTypes table with some dummy data
             if (!context.OfferTypes.Any())
             {
@@ -22,6 +28,29 @@ namespace MercenariesBackend.DAL.Initializer
                 context.OfferTypes.AddRange(offerTypes);
                 context.SaveChanges();
             }
+
+            // Add Offers
+            var offers = new List<Offer>
+            {
+                new Offer
+                {
+                    Title = "Offer 1",
+                    OfferTypeId = 1, // Adjust to match existing category IDs
+                    Description = "Content for Offer 1",
+                    Author = "Author 1",
+                    PublishDate = DateTime.UtcNow
+                },
+                new Offer
+                {
+                    Title = "Offer 2",
+                    OfferTypeId = 2, // Adjust to match existing category IDs
+                    Description = "Content for Offer 2",
+                    Author = "Author 2",
+                    PublishDate = DateTime.UtcNow
+                }
+            };
+            context.Offers.AddRange(offers);
+            context.SaveChanges();
         }
     }
 }

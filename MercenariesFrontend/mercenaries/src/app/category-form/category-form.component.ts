@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Category } from '../category';
-import { CategoryService } from '../category.service';
+import { OfferType } from '../models/offer-type';
+import { OfferTypeService } from '../services/offer-type.service';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   isEdit: boolean = false;
   categoryId: number = 0;
 
-  category: Category = { id: 0, name: "" };
+  category: OfferType = { id: 0, name: "" };
 
   isSubmitted: boolean = false;
   errorMessage: string = "";
@@ -28,7 +28,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   postCategory$: Subscription = new Subscription();
   putCategory$: Subscription = new Subscription();
 
-  constructor(private router: Router, private categoryService: CategoryService) {
+  constructor(private router: Router, private offerTypeService: OfferTypeService) {
     this.isAdd = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'add';
     this.isEdit = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'edit';
     this.categoryId = +this.router.getCurrentNavigation()?.extras.state?.['id'];
@@ -38,7 +38,7 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
     }
 
     if (this.categoryId != null && this.categoryId > 0) {
-      this.category$ = this.categoryService.getCategoryById(this.categoryId).subscribe(result => this.category = result);
+      this.category$ = this.offerTypeService.getCategoryById(this.categoryId).subscribe(result => this.category = result);
     }
 
   }
@@ -55,13 +55,13 @@ export class CategoryFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isSubmitted = true;
     if (this.isAdd) {
-      this.postCategory$ = this.categoryService.postCategory(this.category).subscribe({
+      this.postCategory$ = this.offerTypeService.postCategory(this.category).subscribe({
         next: (v) => this.router.navigateByUrl("/admin/category"),
         error: (e) => this.errorMessage = e.message
       });
     }
     if (this.isEdit) {
-      this.putCategory$ = this.categoryService.putCategory(this.categoryId, this.category).subscribe({
+      this.putCategory$ = this.offerTypeService.putCategory(this.categoryId, this.category).subscribe({
         next: (v) => this.router.navigateByUrl("/admin/category"),
         error: (e) => this.errorMessage = e.message
       });

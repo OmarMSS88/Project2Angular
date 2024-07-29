@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Offer } from '../offer';
+import { Offer } from '../models/offer';
 
 @Component({
   selector: 'app-offer',

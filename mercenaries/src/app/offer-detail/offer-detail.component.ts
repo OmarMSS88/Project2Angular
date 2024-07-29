@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Offer } from '../offer';
-import { OfferService } from '../offer.service';
+import { Offer } from '../models/offer';
+import { OfferService } from '../services/offer.service';
 import { ActivatedRoute } from '@angular/router';
 import { OfferComponent } from '../offer/offer.component';
 

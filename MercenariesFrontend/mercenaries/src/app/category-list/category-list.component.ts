@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Category } from '../category';
-import { CategoryService } from '../category.service';
+import { OfferType } from '../models/offer-type';
+import { OfferTypeService } from '../services/offer-type.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
@@ -14,13 +14,13 @@ import { CommonModule } from '@angular/common';
 })
 
 export class CategoryListComponent implements OnInit, OnDestroy {
-  categories: Category[] = [];
+  categories: OfferType[] = [];
   categories$: Subscription = new Subscription();
   deleteCategorie$: Subscription = new Subscription();
 
   errorMessage: string = '';
 
-  constructor(private categoryService: CategoryService, private router: Router) {
+  constructor(private offerTypeService: OfferTypeService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,14 +43,14 @@ export class CategoryListComponent implements OnInit, OnDestroy {
   }
 
   delete(id: number) {
-    this.deleteCategorie$ = this.categoryService.deleteCategory(id).subscribe({
+    this.deleteCategorie$ = this.offerTypeService.deleteCategory(id).subscribe({
       next: (v) => this.getCategories(),
       error: (e) => this.errorMessage = e.message
     });
   }
 
   getCategories() {
-    this.categories$ = this.categoryService.getCategories().subscribe(result => this.categories = result);
+    this.categories$ = this.offerTypeService.getCategories().subscribe(result => this.categories = result);
   }
 
 }

@@ -1,20 +1,15 @@
 <article *ngIf="offer" class="flex flex-col justify-between h-full bg-white border-gray-200 border-2 p-6 shadow">
     <h1 class="text-4xl my-3">{{offer.title}}</h1>
-    <h4 class="text-xl my-3">{{offer.subtitle}}</h4>
-    <figure class="self-center my-3">
-        <img class="max-w-full h-auto" src="{{offer.imageUrl}}" alt="{{offer.imageCaption}}">
-        <figcaption class="italic text-center">{{offer.imageCaption}}</figcaption>
-    </figure>
     <p *ngIf="!isDetail" class="text-justify my-3">
-        {{offer.content | shortenContent : 250}}
+        {{offer.description | shortenContent : 250}}
     </p>
     <p *ngIf="isDetail"  class="text-justify my-3">
-        {{offer.content}}
+        {{offer.description}}
     </p>
     <p class="py-2">
         <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" (click)="detail(offer.id)">Read more</button>
     </p>
     <footer class="italic uppercase">
-        <p>Author: {{offer.author}}, Published: {{offer.publishDate}}</p>
+        <p>Mercenary: {{offer.author}}, Published: {{offer.publishDate | customDate}}, OfferType {{offer.offerType.name}}</p>
     </footer>
 </article>

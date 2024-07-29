@@ -8,11 +8,13 @@ namespace MercenariesBackend.API.Mapper
     {
         public AutoMapper()
         {
-
             CreateMap<OfferType, OfferTypeDto>();
             CreateMap<CreateOfferTypeDto, OfferType>();
             CreateMap<UpdateOfferTypeDto, OfferType>();
 
+            CreateMap<Offer, OfferDto>();
+            CreateMap<CreateOfferDto, Offer>();
+            CreateMap<UpdateOfferDto, Offer>();
         }
     }
 }
