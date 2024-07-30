@@ -13,7 +13,7 @@ import { CustomDatePipe } from '../custom-date.pipe';
   styleUrl: './offer.component.css'
 })
 export class OfferComponent implements OnInit {
-  @Input() offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", author: "", publishDate: ""};
+  @Input() offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", userId: 0, user: {id: 0, auth0UserId: "", email: "", fullName: ""}, publishDate: ""};
 
   @Input() isDetail: boolean = false;
 

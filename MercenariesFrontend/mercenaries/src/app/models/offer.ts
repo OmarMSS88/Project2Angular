@@ -1,4 +1,5 @@
 import { OfferType } from "./offer-type";
+import { User } from "./user";
 
 
 export interface Offer {
@@ -7,6 +8,7 @@ export interface Offer {
     offerTypeId: number;
     offerType: OfferType;
     description: string;
-    author: string;
+    userId: number;
+    user: User;
     publishDate: string;
 }

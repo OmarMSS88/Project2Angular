@@ -13,7 +13,7 @@ import { OfferComponent } from '../offer/offer.component';
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
-  offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", author: "", publishDate: ""};
+  offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", userId: 0, user: {id: 0, auth0UserId: "", email: "", fullName: ""}, publishDate: ""};
 
   constructor(private offerService: OfferService, private route: ActivatedRoute) { }
 

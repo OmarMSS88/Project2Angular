@@ -29,28 +29,45 @@ namespace MercenariesBackend.DAL.Initializer
                 context.SaveChanges();
             }
 
-            // Add Offers
-            var offers = new List<Offer>
+            // Seed the Users table with some dummy data
+            if (!context.Users.Any())
             {
-                new Offer
+                var users = new User[]
                 {
-                    Title = "Offer 1",
-                    OfferTypeId = 1, // Adjust to match existing category IDs
-                    Description = "Content for Offer 1",
-                    Author = "Author 1",
-                    PublishDate = DateTime.UtcNow
-                },
-                new Offer
+                    new User { Auth0UserId = "auth0|66a51634157a2c4b9074e1aa", Email = "Emailski", FullName = "The Admin" },
+                    new User { Auth0UserId = "auth0|dummyuser2", Email = "Emailski", FullName = "Dummy User 2" }
+                };
+
+                context.Users.AddRange(users);
+                context.SaveChanges();
+            }
+
+            // Add Offers
+            if (!context.Offers.Any())
+            {
+                var offers = new List<Offer>
                 {
-                    Title = "Offer 2",
-                    OfferTypeId = 2, // Adjust to match existing category IDs
-                    Description = "Content for Offer 2",
-                    Author = "Author 2",
-                    PublishDate = DateTime.UtcNow
-                }
-            };
-            context.Offers.AddRange(offers);
-            context.SaveChanges();
+                    new Offer
+                    {
+                        Title = "Offer 1",
+                        OfferTypeId = context.OfferTypes.FirstOrDefault(ot => ot.Name == "Consulting")?.Id ?? 1,
+                        Description = "Content for Offer 1",
+                        UserId = context.Users.FirstOrDefault(u => u.FullName == "The Admin")?.Id ?? 3,
+                        PublishDate = DateTime.UtcNow
+                    },
+                    new Offer
+                    {
+                        Title = "Offer 2",
+                        OfferTypeId = context.OfferTypes.FirstOrDefault(ot => ot.Name == "Design")?.Id ?? 2,
+                        Description = "Content for Offer 2",
+                        UserId = context.Users.FirstOrDefault(u => u.FullName == "Dummy User 2")?.Id ?? 2,
+                        PublishDate = DateTime.UtcNow
+                    }
+                };
+
+                context.Offers.AddRange(offers);
+                context.SaveChanges();
+            }
         }
     }
 }

@@ -13,8 +13,10 @@ namespace MercenariesBackend.DAL
         {
         }
 
+
         public DbSet<OfferType> OfferTypes => Set<OfferType>();
         public DbSet<Offer> Offers => Set<Offer>();
+        public DbSet<User> Users => Set<User>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,8 +26,15 @@ namespace MercenariesBackend.DAL
                 .HasForeignKey(o => o.OfferTypeId)
                 .IsRequired();
 
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Offers)
+                .WithOne(o => o.User)
+                .HasForeignKey(o => o.UserId)
+                .IsRequired();
+
             modelBuilder.Entity<OfferType>().ToTable("OfferType");
             modelBuilder.Entity<Offer>().ToTable("Offer");
+            modelBuilder.Entity<User>().ToTable("Users");
         }
     }
 }

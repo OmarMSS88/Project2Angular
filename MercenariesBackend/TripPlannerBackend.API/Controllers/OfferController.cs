@@ -24,7 +24,10 @@ namespace MercenariesBackend.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OfferDto>>> GetAllOffers()
         {
-            var offers = await _context.Offers.Include(o => o.OfferType).ToListAsync();
+            var offers = await _context.Offers
+        .Include(o => o.OfferType)
+        .Include(o => o.User) // Ensure related User is included
+        .ToListAsync();
 
             if (offers == null || !offers.Any())
             {
@@ -49,6 +52,30 @@ namespace MercenariesBackend.API.Controllers
             return Ok(offerDto);
         }
 
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<List<OfferDto>>> GetOffersByUser(string userId)
+        {
+            var offers = await _context.Offers
+                .Include(o => o.OfferType)
+                .Include(o => o.User)
+                .Where(o => o.User.Auth0UserId == userId)
+                .ToListAsync();
+
+            if (offers == null || !offers.Any())
+            {
+                var offas = await _context.Offers
+                    .Include(o => o.OfferType)
+                    .Include(o => o.User) 
+                    .Where(o => o.User.Auth0UserId == "niks")
+                    .ToListAsync();
+                return Ok(_mapper.Map<List<OfferDto>>(offas)); //return nothing back
+                //return NotFound();
+            }
+
+            var offerDtos = _mapper.Map<List<OfferDto>>(offers);
+            return Ok(offerDtos);
+        }
+
         [HttpPost]
         public async Task<ActionResult<OfferDto>> CreateOffer([FromBody] CreateOfferDto createOfferDto)
         {
@@ -57,7 +84,14 @@ namespace MercenariesBackend.API.Controllers
                 return BadRequest();
             }
 
+            var user = await _context.Users.FindAsync(createOfferDto.UserId);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
             var offer = _mapper.Map<Offer>(createOfferDto);
+            offer.User = user;
 
             _context.Offers.Add(offer);
             await _context.SaveChangesAsync();

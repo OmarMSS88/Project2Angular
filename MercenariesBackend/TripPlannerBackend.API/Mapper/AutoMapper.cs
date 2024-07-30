@@ -15,6 +15,10 @@ namespace MercenariesBackend.API.Mapper
             CreateMap<Offer, OfferDto>();
             CreateMap<CreateOfferDto, Offer>();
             CreateMap<UpdateOfferDto, Offer>();
+
+            CreateMap<User, UserDto>();
+            CreateMap<CreateUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
         }
     }
 }

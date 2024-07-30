@@ -10,6 +10,6 @@
         <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded" (click)="detail(offer.id)">Read more</button>
     </p>
     <footer class="italic uppercase">
-        <p>Mercenary: {{offer.author}}, Published: {{offer.publishDate | customDate}}, OfferType {{offer.offerType.name}}</p>
+        <p>Mercenary: {{offer.user.fullName}}, Published: {{offer.publishDate | customDate}}, OfferType {{offer.offerType.name}}</p>
     </footer>
 </article>
