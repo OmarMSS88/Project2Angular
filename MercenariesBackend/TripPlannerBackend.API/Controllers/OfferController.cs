@@ -84,13 +84,20 @@ namespace MercenariesBackend.API.Controllers
                 return BadRequest();
             }
 
-            var user = await _context.Users.FindAsync(createOfferDto.UserId);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Auth0UserId == createOfferDto.UserId);
             if (user == null)
             {
                 return BadRequest("User not found.");
             }
 
-            var offer = _mapper.Map<Offer>(createOfferDto);
+            var offer = new Offer
+            {
+                Title = createOfferDto.Title,
+                Description = createOfferDto.Description,
+                OfferTypeId = createOfferDto.OfferTypeId,
+                User = user, // Set the user association
+                PublishDate = createOfferDto.PublishDate
+            };
             offer.User = user;
 
             _context.Offers.Add(offer);

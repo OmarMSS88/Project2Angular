@@ -5,6 +5,7 @@ import { Observable, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
 import { UpdateOfferDto } from '../dto/update-offer.dto';
+import { CreateOfferDto } from '../dto/create-offer';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,11 @@ export class OfferService {
 
   constructor(private httpClient: HttpClient, private auth: AuthService) { }
 
-  createOffer(offer: Offer): Observable<Offer> {
+  createOffer(offer: CreateOfferDto): Observable<Offer> {
     return this.auth.user$.pipe(
       switchMap(user => {
         const userId = user?.sub;
-        return this.httpClient.post<Offer>(this.apiUrl, { ...offer, userId });
+        return this.httpClient.post<Offer>(this.apiUrl + "/offer", offer);
       })
     );
   }

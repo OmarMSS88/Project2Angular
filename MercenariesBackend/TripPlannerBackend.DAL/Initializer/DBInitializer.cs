@@ -20,9 +20,9 @@ namespace MercenariesBackend.DAL.Initializer
             {
                 var offerTypes = new OfferType[]
                 {
-                    new OfferType { Name = "Consulting" },
-                    new OfferType { Name = "Design" },
-                    new OfferType { Name = "Development" }
+                    new OfferType { Name = "Negotiable" },
+                    new OfferType { Name = "Fixed Price" },
+                    new OfferType { Name = "Volunteer" }
                 };
 
                 context.OfferTypes.AddRange(offerTypes);

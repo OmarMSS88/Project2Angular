@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { OfferComponent } from '../offer/offer.component';
+import { ShortenContentPipe } from '../shorten-content.pipe';
 
 @Component({
   selector: 'app-my-offers',
   standalone: true,
-  imports: [CommonModule, RouterModule, OfferComponent],
+  imports: [CommonModule, RouterModule, OfferComponent, ShortenContentPipe],
   templateUrl: './my-offers.component.html',
   styleUrls: ['./my-offers.component.css']
 })
@@ -54,6 +55,10 @@ editOffer(id: number) {
   } else {
     console.error('Invalid ID for edit:', id);
   }
+}
+
+addOffer() {
+  this.router.navigate(['myoffers/form'], { state: { mode: 'add' } });
 }
 
 deleteOffer(id: number) {

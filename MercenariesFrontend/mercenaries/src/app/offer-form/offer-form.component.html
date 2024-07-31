@@ -1,6 +1,7 @@
 <div class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300" *ngIf="isSubmitted && errorMessage">
     {{ errorMessage }}
 </div>
+
 <form (ngSubmit)="onSubmit()" #offerForm="ngForm">
     <div class="mb-6">
         <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Title</label>
@@ -11,11 +12,15 @@
     </div>
 
     <div class="mb-6">
-        <label for="offerTypeId" class="block mb-2 text-sm font-medium text-gray-900">Offer Type ID</label>
-        <input type="number" id="offerTypeId" name="offerTypeId"
-               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-               placeholder="Offer Type ID" required [(ngModel)]="offer.offerTypeId" #offerTypeId="ngModel">
-        <div [hidden]="offerTypeId.valid || offerTypeId.pristine" class="text-red-500 mt-2">Offer Type ID is required</div>
+        <label for="offerTypeId" class="block mb-2 text-sm font-medium text-gray-900">Offer Type</label>
+        <select id="offerTypeId" name="offerTypeId"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required [(ngModel)]="offer.offerTypeId" #offerTypeId="ngModel">
+            <option *ngFor="let type of offerTypes" [value]="type.id">
+                {{ type.name }}
+            </option>
+        </select>
+        <div [hidden]="offerTypeId.valid || offerTypeId.pristine" class="text-red-500 mt-2">Offer Type is required</div>
     </div>
 
     <div class="mb-6">
