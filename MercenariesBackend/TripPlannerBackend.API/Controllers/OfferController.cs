@@ -41,7 +41,7 @@ namespace MercenariesBackend.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<OfferDto>> GetOfferById(int id)
         {
-            var offer = await _context.Offers.Include(o => o.OfferType).FirstOrDefaultAsync(o => o.Id == id);
+            var offer = await _context.Offers.Include(o => o.OfferType).Include(o => o.User).FirstOrDefaultAsync(o => o.Id == id);
 
             if (offer == null)
             {

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AuthService } from '@auth0/auth0-angular';
+import { UpdateOfferDto } from '../dto/update-offer.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class OfferService {
   }
 
   getOfferById(id: number): Observable<Offer> {
+    console.log("zover")
     return this.httpClient.get<Offer>(`${this.apiUrl}/offer/${id}`);
   }
 
@@ -34,7 +36,7 @@ export class OfferService {
     return this.httpClient.get<Offer[]>(`${this.apiUrl}/offer/user/${userId}`);
   }
 
-  updateOffer(id: number, offer: Offer): Observable<void> {
+  updateOffer(id: number, offer: UpdateOfferDto): Observable<void> {
     return this.httpClient.put<void>(`${this.apiUrl}/offer/${id}`, offer);
   }
 

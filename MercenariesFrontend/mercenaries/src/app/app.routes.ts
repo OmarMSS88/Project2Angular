@@ -26,8 +26,6 @@ export const routes: Routes = [
     { path: 'myoffers', component: MyOffersComponent },
 
     // Offer form routes for adding and editing
-    { path: 'offer/form', component: OfferFormComponent },
+    { path: 'myoffers/form', component: OfferFormComponent },
 
-    // Optional: catch-all route for unknown paths
-    { path: '**', redirectTo: '' } // Redirect to home or a 404 component if desired
 ];
