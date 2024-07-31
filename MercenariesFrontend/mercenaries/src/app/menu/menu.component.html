@@ -21,14 +21,24 @@
             <a (click)="onHamburgerItemClick()" routerLink="/" routerLinkActive="active"
                [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">Home</a>
           </li>
+          <li>
+            <a (click)="onHamburgerItemClick()" routerLink="/shop" routerLinkActive="active"
+               [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">Offers</a>
+          </li>
           @if(isAuthenticated()) {
             <li>
-              <a (click)="onHamburgerItemClick()" routerLink="/offer" routerLinkActive="active"
-                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded">Offer</a>
+              <a (click)="onHamburgerItemClick()" routerLink="/myoffers" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded">My Offers</a>
+            </li>
+            <li>
+              <app-logout></app-logout>
             </li>
           } @else {
             <li>
               <app-login></app-login>
+            </li>
+            <li>
+              <app-signup></app-signup>
             </li>
           }
           <li>
@@ -50,7 +60,7 @@
                   class="z-10 w-44 font-normal shadow">
                   <ul class="py-1 text-sm text-gray-700 " aria-labelledby="dropdownLargeButton">
                       <li>
-                          <a (click)="navigateTo('/admin/category')"
+                          <a (click)="navigateTo('/admin/offertype')"
                               class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Categories</a>
                       </li>
                   </ul>

@@ -31,7 +31,8 @@ app.UseCors(options =>
 {
     options.AllowAnyHeader();
     options.AllowAnyMethod();
-    options.WithOrigins("http://localhost:4200", "http://localhost:4200");
+    options.AllowAnyOrigin();
+    //options.WithOrigins("http://localhost:4200", "http://localhost:4200", "https://dev-omar.eu.auth0.com");
 });
 
 if (app.Environment.IsDevelopment())
@@ -46,8 +47,10 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var tripContext = scope.ServiceProvider.GetRequiredService<MercenariesDbContext>();
-    DBInitializer.Initialize(tripContext);
+    var mercContext = scope.ServiceProvider.GetRequiredService<MercenariesDbContext>();
+    mercContext.Database.EnsureDeleted(); // This will drop the database
+    mercContext.Database.EnsureCreated(); // This will recreate the database
+    DBInitializer.Initialize(mercContext);
 }
 
 app.Run();

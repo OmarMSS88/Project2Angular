@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Offer } from '../offer';
-import { OfferService } from '../offer.service';
+import { Offer } from '../models/offer';
+import { OfferService } from '../services/offer.service';
 import { ActivatedRoute } from '@angular/router';
 import { OfferComponent } from '../offer/offer.component';
 
@@ -13,7 +13,7 @@ import { OfferComponent } from '../offer/offer.component';
   styleUrls: ['./offer-detail.component.css']
 })
 export class OfferDetailComponent implements OnInit {
-  offer: Offer = { id: 0, title: "", subtitle: "", imageUrl: "", imageCaption: "", content: "", author: "", publishDate: "", categoryId: 0 };
+  offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", userId: 0, user: {id: 0, auth0UserId: "", email: "", fullName: ""}, publishDate: ""};
 
   constructor(private offerService: OfferService, private route: ActivatedRoute) { }
 

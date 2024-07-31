@@ -9,7 +9,8 @@ namespace MercenariesBackend.DAL.Entity
         public int OfferTypeId { get; set; } // Foreign key property
         public OfferType OfferType { get; set; } // Navigation property
         public string Description { get; set; }
-        public string Author { get; set; } // This will eventually be the User Entity when it exists
+        public int UserId { get; set; }
+        public User User { get; set; }
         public DateTime PublishDate { get; set; }
     }
 }

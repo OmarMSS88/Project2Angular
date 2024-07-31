@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { LoginButtonComponent } from '../login/login.component';
 import { AuthService } from '@auth0/auth0-angular';
-import { RoleService } from '../role.service';
+import { RoleService } from '../services/role.service';
+import { LogoutButtonComponent } from '../logout/logout.component';
+import { SignupButtonComponent } from '../signup/signup.component';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule, LoginButtonComponent],
+  imports: [CommonModule, RouterModule, LoginButtonComponent, LogoutButtonComponent, SignupButtonComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

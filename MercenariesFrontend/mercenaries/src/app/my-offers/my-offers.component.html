@@ -1,0 +1,14 @@
+<div *ngIf="offers.length">
+    <div *ngFor="let offer of offers" class="offer-item">
+      <app-offer [offer]="offer"></app-offer>
+      <button (click)="editOffer(offer.id)" class="text-white bg-blue-700 enabled:hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Edit</button>
+      <button (click)="deleteOffer(offer.id)" class="text-white bg-red-700 enabled:hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Delete</button>
+    </div>
+  </div>
+  <p *ngIf="!offers.length">You have no offers... :(</p>
+  
+  <!-- Display error message -->
+  <div *ngIf="errorMessage" class="rounded p-4 mb-4 text-lg bg-red-200 text-red-800 border-2 border-red-300">
+    {{ errorMessage }}
+  </div>
+  
