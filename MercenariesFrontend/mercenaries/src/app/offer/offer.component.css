@@ -1,0 +1,46 @@
+article {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+article:hover {
+    transform: scale(1.02);
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.text-justify {
+    color: #4a4a4a;
+}
+
+footer {
+    margin-top: 1rem;
+    color: #555;
+}
+
+footer p {
+    margin: 0.5rem 0;
+}
+
+footer .font-semibold {
+    color: #333;
+    font-weight: 600;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+button[disabled].bg-gray-500:hover {
+    background-color: #6b7280;
+}
+
+.flex.space-x-4 > div {
+    display: flex;
+    align-items: center;
+}

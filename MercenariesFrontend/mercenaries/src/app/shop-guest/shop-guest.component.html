@@ -1,5 +1,4 @@
-<!-- Add this section at the top of your shop.component.html -->
-
+<!-- Add this section at the top of your shop-guest.component.html -->
 <div class="text-center mb-8">
     <h1 class="text-5xl font-bold text-gray-800">The Shop</h1>
 </div>
@@ -27,7 +26,7 @@
 
 <!-- Grid container for offers -->
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-    <app-offer *ngFor="let offer of filteredOffers" [offer]="offer" [isShop]="true"></app-offer>
+    <app-offer-guest *ngFor="let offer of filteredOffers" [offer]="offer"></app-offer-guest>
 </div>
 
 <p *ngIf="!filteredOffers.length" class="text-center mt-4">No offers available... :(</p>

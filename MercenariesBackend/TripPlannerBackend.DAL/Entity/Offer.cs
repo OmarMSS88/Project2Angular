@@ -12,5 +12,6 @@ namespace MercenariesBackend.DAL.Entity
         public int UserId { get; set; }
         public User User { get; set; }
         public DateTime PublishDate { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

@@ -21,10 +21,7 @@
             <a (click)="onHamburgerItemClick()" routerLink="/" routerLinkActive="active"
                [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">Home</a>
           </li>
-          <li>
-            <a (click)="onHamburgerItemClick()" routerLink="/shop" routerLinkActive="active"
-               [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">Offers</a>
-          </li>
+          
           @if(isAuthenticated()) {
             <li>
               <a (click)="onHamburgerItemClick()" routerLink="/myoffers" routerLinkActive="active"
@@ -33,7 +30,27 @@
             <li>
               <app-logout></app-logout>
             </li>
+            <li>
+              <a (click)="onHamburgerItemClick()" routerLink="/shop" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">The Shop</a>
+            </li>
+            <li>
+              <a (click)="onHamburgerItemClick()" routerLink="/mybookings" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded">My Bookings</a>
+            </li>
+            <li>
+              <a (click)="onHamburgerItemClick()" routerLink="/myjobs" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded">My Jobs</a>
+            </li>
+            <li>
+              <a (click)="onHamburgerItemClick()" routerLink="/user" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded">Profile</a>
+            </li>
           } @else {
+            <li>
+              <a (click)="onHamburgerItemClick()" routerLink="/shopguest" routerLinkActive="active"
+                 [routerLinkActiveOptions]="{ exact: true }" class="block py-2 pr-4 pl-3 rounded ">The Shop</a>
+            </li>
             <li>
               <app-login></app-login>
             </li>

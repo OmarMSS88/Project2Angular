@@ -1,1 +1,26 @@
-<app-offer *ngIf="offer" [offer]="offer" [isDetail]="true"></app-offer>
+<div class="offer-detail-container">
+  <a class="back-link" (click)="goBack()">← Back</a>
+  
+  <h1 class="offer-title">{{ offer.title }}</h1>
+  
+  <div class="offer-description">
+    <p>{{ offer.description }}</p>
+  </div>
+  
+  <div class="offer-details">
+    <p><strong>Offer Type:</strong> {{ offer.offerType.name }}</p>
+    <p><strong>Published Date:</strong> {{ offer.publishDate | customDate }}</p>
+  </div>
+  
+  <div class="mercenary-info">
+    <p><strong>Mercenary:</strong> {{ offer.user.fullName }}</p>
+    <p><strong>Contact:</strong> 
+      <a [href]="'mailto:' + offer.user.email"> {{ offer.user.email }}</a>
+    </p>
+  </div>
+  
+  <!-- Conditionally display the "Book Offer" button -->
+  <div *ngIf="!isGuest">
+    <button class="book-offer-button" (click)="bookOffer()">Book Offer</button>
+  </div>
+</div>
