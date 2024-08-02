@@ -27,7 +27,11 @@ export const appConfig: ApplicationConfig = {
         redirect_uri: environment.redirectUri
       },
       httpInterceptor: {
-        allowedList: [`${environment.api_url}/*`]
+        allowedList: [{ uri: `${environment.api_url}/user/*` },
+          { uri: `${environment.api_url}/booking*` },
+          { uri: `${environment.api_url}/offertype/*` },
+          { uri: `${environment.api_url}/user` },
+          { uri: `${environment.api_url}/booking` },]
       }
     }),
   ],

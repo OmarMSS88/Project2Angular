@@ -1,10 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Offer } from '../models/offer';
-import { OfferService } from '../services/offer.service';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Offer } from '../models/offer';
+import { OfferService } from '../services/offer.service';
+import { OfferTypeService } from '../services/offer-type.service';
+import { OfferType } from '../models/offer-type';
+import { UpdateOfferDto } from '../dto/update-offer.dto';
+import { CreateOfferDto } from '../dto/create-offer';
+import { AuthService } from '@auth0/auth0-angular'; // Auth0 service for user authentication
 
 @Component({
   selector: 'app-offer-form',
@@ -16,42 +21,50 @@ import { CommonModule } from '@angular/common';
 export class OfferFormComponent implements OnInit, OnDestroy {
   isAdd: boolean = false;
   isEdit: boolean = false;
-  offerId: number = 0;
+  offerId: number = 1;
 
-  offer: Offer = { id: 0, title: "", offerTypeId: 0, offerType: { id: 0, name: ""}, description: "", userId: 0, user: {id: 0, auth0UserId: "", email: "", fullName: ""}, publishDate: ""};
+  offer: Offer = { 
+    id: 0, 
+    title: "", 
+    offerTypeId: 0, 
+    offerType: { id: 0, name: ""}, 
+    description: "", 
+    userId: 0, 
+    user: { id: 0, auth0UserId: "", email: "", fullName: ""}, 
+    publishDate: "" 
+  };
 
+  offerTypes: OfferType[] = [];
   isSubmitted: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string = "";
 
   offer$: Subscription = new Subscription();
   postOffer$: Subscription = new Subscription();
   putOffer$: Subscription = new Subscription();
+  offerTypes$: Subscription = new Subscription();
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private offerService: OfferService
+    private router: Router, 
+    private offerService: OfferService,
+    private offerTypeService: OfferTypeService,
+    private auth: AuthService // Inject Auth0 service for user authentication
   ) {
-    // Use 'nullish coalescing operator' to handle undefined or null values
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras.state) {
-      this.isAdd = navigation.extras.state['mode'] === 'add';
-      this.isEdit = navigation.extras.state['mode'] === 'edit';
-      this.offerId = Number(navigation.extras.state['id']); // Convert to number
-  
-      if (isNaN(this.offerId)) {
-        console.error('Invalid offerId:', this.offerId);
-      }
-  
-      if (this.isEdit && this.offerId > 0) {
-        this.offer$ = this.offerService.getOfferById(this.offerId).subscribe({
-          next: (result) => this.offer = result,
-          error: (e) => this.errorMessage = e.message
-        });
-      }
-    } else {
-      console.error('No navigation extras found');
+    this.isAdd = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'add';
+    this.isEdit = this.router.getCurrentNavigation()?.extras.state?.['mode'] === 'edit';
+    this.offerId = +this.router.getCurrentNavigation()?.extras.state?.['id'];
+
+    if (!this.isAdd && !this.isEdit) {
+      this.isAdd = true;
     }
+
+    if (this.offerId != null && this.offerId > 0) {
+      this.offer$ = this.offerService.getOfferById(this.offerId).subscribe(result => this.offer = result);
+    }
+
+    this.offerTypes$ = this.offerTypeService.getOfferTypes().subscribe({
+      next: (types) => this.offerTypes = types,
+      error: (e) => this.errorMessage = e.message
+    });
   }
 
   ngOnInit(): void {}
@@ -60,21 +73,43 @@ export class OfferFormComponent implements OnInit, OnDestroy {
     this.offer$.unsubscribe();
     this.postOffer$.unsubscribe();
     this.putOffer$.unsubscribe();
+    this.offerTypes$.unsubscribe();
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.isAdd) {
-      this.postOffer$ = this.offerService.createOffer(this.offer).subscribe({
-        next: () => this.router.navigateByUrl('/my-offers'),
-        error: (e) => this.errorMessage = e.message
-      });
-    }
-    if (this.isEdit) {
-      this.putOffer$ = this.offerService.updateOffer(this.offerId, this.offer).subscribe({
-        next: () => this.router.navigateByUrl('/my-offers'),
-        error: (e) => this.errorMessage = e.message
-      });
-    }
+
+    this.auth.user$.subscribe(user => {
+      if (user?.sub) {
+        if (this.isAdd) {
+          const createOfferDto: CreateOfferDto = {
+            title: this.offer.title,
+            description: this.offer.description,
+            offerTypeId: this.offer.offerTypeId,
+            userId: user.sub, // Set the user ID
+            publishDate: new Date() // Set the current date and time as the publishing date
+          };
+
+          this.postOffer$ = this.offerService.createOffer(createOfferDto).subscribe({
+            next: () => this.router.navigateByUrl('/myoffers'),
+            error: (e) => this.errorMessage = e.message
+          });
+        }
+
+        if (this.isEdit) {
+          const updateOfferDto: UpdateOfferDto = {
+            id: this.offer.id,
+            title: this.offer.title,
+            description: this.offer.description,
+            offerTypeId: this.offer.offerTypeId
+          };
+
+          this.putOffer$ = this.offerService.updateOffer(this.offerId, updateOfferDto).subscribe({
+            next: () => this.router.navigateByUrl('/myoffers'),
+            error: (e) => this.errorMessage = e.message
+          });
+        }
+      }
+    });
   }
 }

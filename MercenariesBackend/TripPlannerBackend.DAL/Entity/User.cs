@@ -14,7 +14,7 @@ namespace MercenariesBackend.DAL.Entity
         public string Email { get; set; }
         public string FullName { get; set; }
         public ICollection<Offer> Offers { get; set; } = new List<Offer>();
-        // Add other fields as necessary
+        public ICollection<Booking> Bookings { get; set; }
     }
 }
 

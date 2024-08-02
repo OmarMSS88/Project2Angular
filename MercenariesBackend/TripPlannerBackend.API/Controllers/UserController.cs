@@ -28,17 +28,25 @@ namespace MercenariesBackend.API.Controllers
             return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
         }
 
-        // GET: api/user/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(int id)
+        // GET: api/user/{authId}
+        [HttpGet("{authId}")]
+        public async Task<ActionResult<UserDto>> GetUser(string authId)
         {
-            var user = await _context.Users.FindAsync(id);
+            if (string.IsNullOrEmpty(authId))
+            {
+                return BadRequest("Auth ID cannot be null or empty.");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Auth0UserId == authId);
+
             if (user == null)
             {
                 return NotFound();
             }
+
             return Ok(_mapper.Map<UserDto>(user));
         }
+
 
         // POST: api/user
         [HttpPost]
@@ -54,25 +62,38 @@ namespace MercenariesBackend.API.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, _mapper.Map<UserDto>(user));
         }
 
-        // PUT: api/user/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto updateUserDto)
+
+
+        [HttpPut("{authId}")]
+        public async Task<IActionResult> UpdateUserProfile(string authId, [FromBody] UpdateUserDto updates)
         {
-            if (updateUserDto == null || id != updateUserDto.Id)
+            if (string.IsNullOrEmpty(authId))
             {
-                return BadRequest();
+                return BadRequest("Auth ID cannot be null or empty.");
             }
 
-            var user = await _context.Users.FindAsync(id);
+            if (updates == null)
+            {
+                return BadRequest("Update data cannot be null.");
+            }
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Auth0UserId == authId);
+
             if (user == null)
             {
                 return NotFound();
             }
 
-            _mapper.Map(updateUserDto, user);
-            _context.Entry(user).State = EntityState.Modified;
+            // Apply updates
+            if (!string.IsNullOrEmpty(updates.FullName))
+            {
+                user.FullName = updates.FullName;
+            }
+
+            // Save changes
             await _context.SaveChangesAsync();
-            return NoContent();
+
+            return NoContent(); // No content means the update was successful
         }
 
         // DELETE: api/user/{id}

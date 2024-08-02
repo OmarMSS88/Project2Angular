@@ -10,12 +10,19 @@ import { adminGuard } from './admin.guard';
 import { ShopComponent } from './shop/shop.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { OfferFormComponent } from './offer-form/offer-form.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { MyJobsComponent } from './my-jobs/my-jobs.component';
+import { ShopGuestComponent } from './shop-guest/shop-guest.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { OfferDetailGuestComponent } from './offer-detail-guest/offer-detail-guest.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'offer', component: OfferComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'offer/:id', component: OfferDetailComponent },
+    { path: 'offerguest/:id', component: OfferDetailGuestComponent },
+
     
     // Admin routes with guards
     { path: 'admin/offertype', component: OfferTypeListComponent, canActivate: [AuthGuard, adminGuard] },
@@ -23,11 +30,18 @@ export const routes: Routes = [
 
     // Shop and My Offers routes
     { path: 'shop', component: ShopComponent },
+    { path: 'shopguest', component: ShopGuestComponent },
     { path: 'myoffers', component: MyOffersComponent },
 
     // Offer form routes for adding and editing
-    { path: 'offer/form', component: OfferFormComponent },
+    { path: 'myoffers/form', component: OfferFormComponent },
 
-    // Optional: catch-all route for unknown paths
-    { path: '**', redirectTo: '' } // Redirect to home or a 404 component if desired
+
+    // Booked Offers and Offers Booked
+    { path: 'mybookings', component: MyBookingsComponent },
+    { path: 'myjobs', component: MyJobsComponent },
+
+    // User name change
+    { path: 'user', component: UserProfileComponent }
+
 ];

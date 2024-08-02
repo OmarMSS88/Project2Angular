@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@auth0/auth0-angular';
 import { OfferComponent } from '../offer/offer.component';
+import { ShortenContentPipe } from '../shorten-content.pipe';
 
 @Component({
   selector: 'app-my-offers',
   standalone: true,
-  imports: [CommonModule, RouterModule, OfferComponent],
+  imports: [CommonModule, RouterModule, OfferComponent, ShortenContentPipe],
   templateUrl: './my-offers.component.html',
   styleUrls: ['./my-offers.component.css']
 })
@@ -49,10 +50,15 @@ export class MyOffersComponent implements OnInit, OnDestroy {
   // Ensure that id is always a number when passed to editOffer and deleteOffer methods
 editOffer(id: number) {
   if (!isNaN(id)) {
-    this.router.navigate(['/offer/form'], { state: { id: id, mode: 'edit' } });
+    console.log('ID for edit:', id);
+    this.router.navigate(['myoffers/form'], { state: { id: id, mode: 'edit' } });
   } else {
     console.error('Invalid ID for edit:', id);
   }
+}
+
+addOffer() {
+  this.router.navigate(['myoffers/form'], { state: { mode: 'add' } });
 }
 
 deleteOffer(id: number) {

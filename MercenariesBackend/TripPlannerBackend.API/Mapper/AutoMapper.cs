@@ -19,6 +19,12 @@ namespace MercenariesBackend.API.Mapper
             CreateMap<User, UserDto>();
             CreateMap<CreateUserDto, User>();
             CreateMap<UpdateUserDto, User>();
+
+            CreateMap<Booking, BookingDto>()
+                .ForMember(dest => dest.Booker, opt => opt.MapFrom(src => src.Booker))
+                .ForMember(dest => dest.Offer, opt => opt.MapFrom(src => src.Offer));
+
+            CreateMap<CreateBookingDto, Booking>();
         }
     }
 }
