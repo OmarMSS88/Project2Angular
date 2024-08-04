@@ -42,6 +42,7 @@ export class OfferService {
   }
 
   deleteOffer(id: number): Observable<void> {
+    console.log("zover id: " + id)
     return this.httpClient.delete<void>(`${this.apiUrl}/offer/${id}`);
   }
 }

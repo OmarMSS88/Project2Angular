@@ -1,23 +1,27 @@
-import { Component } from '@angular/core';
+
 import { Offer } from '../models/offer';
 import { OfferService } from '../services/offer.service';
 import { OfferComponent } from '../offer/offer.component';
 import { CommonModule } from '@angular/common';
+import { LoginButtonComponent } from "../login/login.component";
+import { SignupButtonComponent } from "../signup/signup.component";
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, OfferComponent],
+  imports: [CommonModule, OfferComponent, LoginButtonComponent, SignupButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  offers$: Observable<Offer[]> = new Observable<Offer[]>();
+export class HomeComponent implements OnInit {
+  isAuthenticated$: Observable<boolean>;
 
-  constructor(private offerService: OfferService) { }
-
-  ngOnInit(): void {
-    this.offers$ = this.offerService.getOffers();
+  constructor(private auth: AuthService) {
+    this.isAuthenticated$ = this.auth.isAuthenticated$;
   }
+
+  ngOnInit(): void {}
 }
