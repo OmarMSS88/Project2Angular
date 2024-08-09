@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, of } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { OfferService } from '../services/offer.service';
 import { Offer } from '../models/offer';
 import { CommonModule } from '@angular/common';
@@ -36,31 +36,27 @@ export class ShopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Fetch offers regardless of the authentication status
     this.offerService.getOffers().pipe(
       catchError(error => {
         this.errorMessage = 'Error fetching offers';
         return of([]); // Return an empty array on error
       })
     ).subscribe(result => {
-      // If a user is authenticated, filter out offers by the currently logged-in user
       this.authService.user$.subscribe(user => {
         this.userId = user?.sub || null;
   
-        // Apply filtering based on user authentication status
         this.offers = this.userId ? result.filter(offer => offer.user.auth0UserId !== this.userId) : result;
         this.filteredOffers = this.offers;
       });
     });
-  
-    // Fetch offer types regardless of the authentication status
+
     this.getOfferTypes();
   }
 
   ngOnDestroy(): void {
     this.offers$.unsubscribe();
   }
-  
+
   getOfferTypes() {
     this.offerTypeService.getOfferTypes().subscribe({
       next: (result) => this.offerTypes = result,
@@ -76,6 +72,11 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   detail(id: number) {
-    this.router.navigate(['/offer', id], { queryParams: {isGuest: true}});
+    this.router.navigate(['/offer', id], { queryParams: {isGuest: false}});
+  }
+
+  onOfferDeleted(offerId: number) {
+    this.offers = this.offers.filter(offer => offer.id !== offerId);
+    this.applyFilters(); // Reapply filters to update the filteredOffers array
   }
 }

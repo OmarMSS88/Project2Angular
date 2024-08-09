@@ -1,5 +1,16 @@
-<h1 class="text-4xl">Welcome home</h1>
-<div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 mx-auto py-6">
-    <app-offer *ngFor="let offer of offers$ | async"
-        [offer]="offer"></app-offer>
-</div>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
+    <h1 class="text-5xl font-bold text-center mb-8">Welcome home</h1>
+    <p class="text-lg leading-relaxed text-gray-700 mb-6">
+      Welcome to Mercenary Hub, the premier online marketplace for connecting skilled mercenaries with those in need of their unique talents. Whether you're looking for a bodyguard, a private investigator, or a specialized consultant, Mercenary Hub is your one-stop platform for finding the right professional for the job. Our site offers a wide range of services, each provided by highly vetted and experienced mercenaries who are committed to delivering top-notch results. With user-friendly features and robust search capabilities, you can easily browse through various offers, read detailed descriptions, and make informed decisions about whom to hire.
+    </p>
+    <p class="text-lg leading-relaxed text-gray-700 mb-8">
+      At Mercenary Hub, we prioritize safety, reliability, and excellence. Our advanced booking system allows clients to schedule services with ease. For mercenaries, our platform provides an excellent opportunity to showcase their skills, reach a broader audience, and grow their professional network. Join us today and experience the seamless interaction between demand and expertise, all within a community dedicated to mutual respect and professionalism. Whether you're hiring or offering services, Mercenary Hub is here to support your journey every step of the way.
+    </p>
+    
+    <!-- Display buttons only if user is not authenticated -->
+    <div *ngIf="!(isAuthenticated$ | async)" class="flex justify-center gap-4">
+      <app-login></app-login>
+      <app-signup></app-signup>
+    </div>
+  </div>
+  
