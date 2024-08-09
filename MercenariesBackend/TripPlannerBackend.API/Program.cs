@@ -31,8 +31,8 @@ app.UseCors(options =>
 {
     options.AllowAnyHeader();
     options.AllowAnyMethod();
-    options.AllowAnyOrigin();
-    //options.WithOrigins("http://localhost:4200", "http://localhost:4200", "https://dev-omar.eu.auth0.com");
+    //options.AllowAnyOrigin();
+    options.WithOrigins("http://localhost:4200", "https://mercenaries.netlify.app", "https://dev-omar.eu.auth0.com");
 });
 
 if (app.Environment.IsDevelopment())
